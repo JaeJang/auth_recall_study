@@ -18,4 +18,4 @@ In the session based authentication, the server will create a session for the us
 <br>
 <br>
 <br>
-source: [Session vs Token Based Authentication](https://medium.com/@sherryhsu/session-vs-token-based-authentication-11a6c5ac45e4).
+source: https://medium.com/@sherryhsu/session-vs-token-based-authentication-11a6c5ac45e4
