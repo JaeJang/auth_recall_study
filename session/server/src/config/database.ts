@@ -1,5 +1,5 @@
 import { ConnectionOptions } from "typeorm";
-import User from "../user";
+import User from "../models/user";
 
 const { DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST = "localhost", DB_PORT = 5432 } = process.env;
 

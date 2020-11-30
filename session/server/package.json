@@ -6,12 +6,14 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc",
-    "start": "nodemon --exec ts-node src/app.ts",
+    "start": "nodemon --exec ts-node src/index.ts",
     "redis": "docker run -i --rm --name redis -v /home/jae/.volumes/redis-auth-session/redis:/data -d -p 6379:6379 redis redis-server --requirepass \"secret\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.0",
     "connect-redis": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -21,9 +23,11 @@
     "typeorm": "^0.2.29"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/connect-redis": "0.0.15",
     "@types/express": "^4.17.9",
     "@types/express-session": "^1.17.3",
+    "@types/hapi__joi": "^17.1.6",
     "@types/ioredis": "^4.17.8",
     "@types/node": "^14.14.10",
     "ts-node": "^9.0.0",

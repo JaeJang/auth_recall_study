@@ -11,6 +11,8 @@ export default class User {
 
   @Column("text", { nullable: false }) salt!: string;
 
+  @Column("text", { nullable: true }) name!: string;
+
   @CreateDateColumn({ type: "timestamp" }) createdAt!: Date;
 
   @UpdateDateColumn({ type: "timestamp" }) updatedAt!: Date;
