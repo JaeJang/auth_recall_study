@@ -1,6 +1,8 @@
 import { Request } from "express";
-import session, { SessionData } from "express-session";
+import session  from "express-session";
 
-/* export const logIn = (req: Request, userId: number) => {
+export const isLoggedIn = (req: any) => !!req.session.userId;
+
+export const logIn = (req: any, userId: number) => {
   req.session.userId = userId;
-}  */
+} 

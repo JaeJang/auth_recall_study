@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import session, { Store } from "express-session";
 
 import { SESSION_OPTIONS } from "./config";
+import { serverError, notFound } from "./middleware";
 import { register } from "./routes";
 
 export const createApp = (store: Store) => {
@@ -16,7 +17,10 @@ export const createApp = (store: Store) => {
     })
   );
 
-
   app.use(register);
+
+  app.use(notFound);
+
+  app.use(serverError);
   return app;
 };

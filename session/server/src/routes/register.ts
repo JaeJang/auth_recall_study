@@ -1,32 +1,38 @@
-import { Router } from 'express';
-import { getConnection, getRepository } from 'typeorm';
-import bcrypt from 'bcrypt';
-import User from '../models/user';
-import { registerSchema } from "../validation";
-//import { logIn } from '../auth';
+import { Request, Response, Router } from "express";
+import { getConnection, getRepository } from "typeorm";
+import bcrypt from "bcrypt";
+import User from "../models/user";
+import { registerSchema, validate } from "../validation";
+import { logIn } from "../auth";
+import { guest } from "../middleware/auth";
+import { catchAsync } from "../middleware";
+import { BadRequest } from "../errors";
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
-  await registerSchema.validateAsync(req.body, { abortEarly: false});
+router.post(
+  "/register",
+  guest,
+  catchAsync(async (req: Request, res: Response) => {
+    validate(registerSchema, req.body);
 
-  const { email, name, password } = req.body;
-  
-  const found = await getRepository(User).findOne({email: email});
+    const { email, name, password } = req.body;
 
-  if (found) {
-    throw new Error('Invalid email');
-  }
+    const found = await getRepository(User).findOne({ email: email });
 
-  const salt = await bcrypt.genSalt();
-  const hashedPassword = await bcrypt.hash(password, salt);
+    if (found) {
+      throw new BadRequest("Invalid Email");
+    }
 
-  const user = await getRepository(User).save({ email, password: hashedPassword, salt, name});
-  
-  //logIn(req, user.id);
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  res.send(user);
+    const user = await getRepository(User).save({ email, password: hashedPassword, salt, name });
 
-});
+    logIn(req, user.id);
+
+    res.send(user);
+  })
+);
 
 export default router;
