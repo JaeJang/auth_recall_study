@@ -3,7 +3,7 @@ import session, { Store } from "express-session";
 
 import { SESSION_OPTIONS } from "./config";
 import { serverError, notFound } from "./middleware";
-import { register } from "./routes";
+import { login, register } from "./routes";
 
 export const createApp = (store: Store) => {
   const app = express();
@@ -16,6 +16,8 @@ export const createApp = (store: Store) => {
       store: store,
     })
   );
+
+  app.use(login);
 
   app.use(register);
 

@@ -1,3 +1,4 @@
+import { compare } from "bcrypt";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
@@ -16,4 +17,8 @@ export default class User {
   @CreateDateColumn({ type: "timestamp" }) createdAt!: Date;
 
   @UpdateDateColumn({ type: "timestamp" }) updatedAt!: Date;
+
+  matchesPassword(password: string): Promise<boolean> {
+    return compare(password, this.password);
+  }
 }

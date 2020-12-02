@@ -14,7 +14,7 @@ router.post(
   "/register",
   guest,
   catchAsync(async (req: Request, res: Response) => {
-    validate(registerSchema, req.body);
+    await validate(registerSchema, req.body);
 
     const { email, name, password } = req.body;
 
