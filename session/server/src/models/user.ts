@@ -10,7 +10,7 @@ export default class User {
 
   @Column("text", { nullable: false }) password!: string;
 
-  @Column("text", { nullable: false }) salt!: string;
+  @Column("text", { nullable: false, select: false }) salt!: string;
 
   @Column("text", { nullable: true }) name!: string;
 
