@@ -1,9 +1,10 @@
-import express, { NextFunction, Request, Response } from "express";
-import session, { Store } from "express-session";
+import express, { NextFunction, Request, Response } from 'express';
+import session, { Store } from 'express-session';
 
-import { SESSION_OPTIONS } from "./config";
-import { serverError, notFound } from "./middleware";
-import { login, register, home } from "./routes";
+import { SESSION_OPTIONS } from './config';
+import { serverError, notFound, catchAsync } from './middleware';
+import { active } from './middleware/auth';
+import { login, register, home } from './routes';
 
 export const createApp = (store: Store) => {
   const app = express();
@@ -13,12 +14,14 @@ export const createApp = (store: Store) => {
   app.use(
     session({
       ...SESSION_OPTIONS,
-      store: store,
+      store: store
     })
   );
 
+  app.use(catchAsync(active));
+
   app.use(home);
-  
+
   app.use(login);
 
   app.use(register);

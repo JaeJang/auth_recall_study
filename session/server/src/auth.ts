@@ -5,6 +5,7 @@ export const isLoggedIn = (req: any) => !!req.session.userId;
 
 export const logIn = (req: any, userId: number) => {
   req.session.userId = userId;
+  req.session.createdAt = Date.now();
 };
 
 export const logOut = (req: Request, res: Response) => {
