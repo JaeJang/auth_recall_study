@@ -20,7 +20,9 @@ export const SESSION_OPTIONS: SessionOptions = {
   cookie: {
     maxAge: +SESSION_IDEL_TIMEOUT,
     secure: IN_PROD,
-    sameSite: true
+    sameSite: true,
+    httpOnly: true
+    
   },
   //genid: ,
   rolling: true,
