@@ -23,6 +23,10 @@ export const createApp = (store: Store) => {
 
   app.use(register);
 
+  app.get("/hello", (req, res ) => {
+    throw new Error("Hello world");
+  })
+
   app.use(notFound);
 
   app.use(serverError);
