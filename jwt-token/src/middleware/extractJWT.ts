@@ -1,27 +1,23 @@
 import { NextFunction, Request, Response } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-import config from "../config/config";
+import { SERVER } from "../config/config";
+import { NotFound, Unauthorized } from "../errors";
 
 const extractJWT = (req: Request, res: Response, next: NextFunction) => {
   let token = req.headers.authorization?.split(" ")[1];
 
   if (token) {
-    jwt.verify(token, config.server.token.secret!, (error, decoded) => {
+    jwt.verify(token, SERVER.token.secret!, (error, decoded) => {
       if (error) {
-        return res.status(404).json({
-          message: error.message,
-          error,
-        });
+        throw new NotFound();
       } else {
         res.locals.jwt = decoded;
         next();
       }
     });
   } else {
-    return res.status(401).json({
-      message: "Unauthorized"
-    })
+    throw new Unauthorized();
   }
 };
 

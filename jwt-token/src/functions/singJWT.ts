@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import config from "../config/config";
+import { SERVER } from "../config";
 import IUser from "../interfaces/user";
 
 export const signJWT = (user: IUser, cb: (error: Error | null, token: string | null) => void): void => {
   var timeSinchEpoch = new Date().getTime();
-  var expirationTime = timeSinchEpoch + Number(config.server.token.expireTime) * 100000;
+  var expirationTime = timeSinchEpoch + Number(SERVER.token.expireTime) * 100000;
   var expirationTimeInSeconds = Math.floor(expirationTime / 1000);
 
   try {
@@ -12,9 +12,9 @@ export const signJWT = (user: IUser, cb: (error: Error | null, token: string | n
       {
         username: user.username,
       },
-      config.server.token.secret!,
+      SERVER.token.secret!,
       {
-        issuer: config.server.token.issuer,
+        issuer: SERVER.token.issuer,
         algorithm: "HS256",
         expiresIn: expirationTimeInSeconds,
       },
