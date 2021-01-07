@@ -116,3 +116,61 @@ app.get('/', function (req, res, next) {
   }).catch(next) // Errors will be passed to Express.
 })
 ```
+
+---
+
+## 3. OAuth 2.0
+
+To access to protected data from a servier or application(Resource Server) for an user(Resource Owner), the client needs to be authorized by the user. When authorizing, it's safer and more secure than asking users to log in with passwords. Use OAuth to let application developers securely get access to the users' data without sharing their passwords.
+
+![Oauth Flow](images/oauth-flow.png)
+
+### OAuth Grant Types
+
+- Authorization Code
+
+  The Authorization Code grant type is used by confidential and public clients to exchange an authorization code for an access token.
+
+  After the user returns to the client via the redirect URL, the application will get the authorization code from the URL and use it to request an access token.
+
+  It is recommended that all clients use the PKCE extension with this flow as well to provide better security.  
+  https://oauth.net/2/pkce/
+
+  ![Auth Code Type](images/grant-auth-code.png)
+
+
+- Client Credential  
+  The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user.
+
+  This is typically used by clients to access resources about themselves rather than to access a user's resources.
+
+  ![Client Credential](images/grant-client-credential.png)
+
+- Device Code
+
+  The Device Code grant type is used by browserless or input-constrained devices in the device flow to exchange a previously obtained device code for an access token.
+
+  ![Device Code](images/grant-device-code.png)
+
+- Implicit (Legacy)
+
+  The Implicit flow was a simplified OAuth flow previously recommended for native apps and JavaScript apps where the access token was returned immediately without an extra authorization code exchange step.
+
+  It is not recommended to use the implicit flow (and some servers prohibit this flow entirely) due to the inherent risks of returning access tokens in an HTTP redirect without any confirmation that it has been received by the client.
+
+  ![Implicit](images/grant-implicit.png)
+
+- Resource Owner Password Credentials Grant (Legacy)
+
+  The Password grant type is a way to exchange a user's credentials for an access token. Because the client application has to collect the user's password and send it to the authorization server, it is not recommended that this grant be used at all anymore.
+
+  This flow provides no mechanism for things like multifactor authentication or delegated accounts, so is quite limiting in practice.
+
+  ![Resource Owner Password Credentials Grant](images/grant-password.png)
+
+
+
+sources:  
+https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow
+https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2  
+https://oauth.net/2/
