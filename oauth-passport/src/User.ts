@@ -1,15 +1,10 @@
 import mongoose from "mongoose";
 
 const user = new mongoose.Schema({
-  username: {
+  googleId: {
     type: String,
-    unique: true,
-  },
-  password: String,
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
+    unique: true
+  }
 });
 
 export default mongoose.model("User", user);
